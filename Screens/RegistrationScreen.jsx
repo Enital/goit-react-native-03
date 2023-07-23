@@ -1,5 +1,15 @@
 import { useState, useRef } from 'react';
-import { View, Text, TextInput, Image, Pressable, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    Image,
+    Pressable,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    Keyboard,
+} from 'react-native';
+// import { useHeaderHeight } from '@react-navigation/elements'
 
 export const RegistrationScreen = ({ userRegistered }) => {
     const [login, setLogin] = useState('');
@@ -18,69 +28,83 @@ export const RegistrationScreen = ({ userRegistered }) => {
         setIsPasswordHidden(state => !state);
     }
 
+    // const height = useHeaderHeight();
     return (
-        <View style={styles.registrationForm}>
-            <View style={styles.userPhoto}>
-                <Pressable style={styles.btnAddPhoto}>
-                    <Image
-                        style={styles.btnAddPhotoIcon}
-                        source={require('../Images/button-add-photo-min.png')}
-                    />
-                </Pressable>
-            </View>
-            <View style={styles.container}>
-                <Text style={styles.title}>Реєстрація</Text>
-                <TextInput
-                    style={[styles.input, isLoginFocused && styles.inputFocused]}
-                    textContentType='username'
-                    value={login}
-                    onChangeText={setLogin}
-                    onFocus={() => setIsLoginFocused(true)}
-                    onBlur={() => setIsLoginFocused(false)}
-                    placeholder='Логін'
-                />
-                <TextInput
-                    style={[styles.input, isEmailFocused && styles.inputFocused]}
-                    textContentType='emailAddress'
-                    keyboardType='email-address'
-                    value={email}
-                    onChangeText={setEmail}
-                    onFocus={() => setIsEmailFocused(true)}
-                    onBlur={() => setIsEmailFocused(false)}
-                    placeholder='Адреса електронної пошти'
-                />
-                <View>
-                    <TextInput
-                        style={[styles.input, styles.inputLast, isPasswordFocused && styles.inputFocused]}
-                        ref={passwordInput}
-                        textContentType='password'
-                        secureTextEntry={isPasswordHidden}
-                        value={password}
-                        onChangeText={setPassword}
-                        onFocus={() => setIsPasswordFocused(true)}
-                        onBlur={() => setIsPasswordFocused(false)}
-                        placeholder='Пароль'
-                    />
-                    <Pressable
-                        style={styles.btnPasswordShow}
-                        onPress={showPassword}>
-                        <Text style={styles.btnPasswordShowLabel}>Показати</Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        {/* <KeyboardAvoidingView
+            keyboardVerticalOffset={5}
+           behavior="padding"
+             style={styles.KeyboardAvoidingView}
+            enabled
+         > */}
+            <View style={styles.registrationForm}>
+                <View style={styles.userPhoto}>
+                    <Pressable style={styles.btnAddPhoto}>
+                        <Image
+                            style={styles.btnAddPhotoIcon}
+                            source={require('../Images/button-add-photo-min.png')}
+                        />
                     </Pressable>
                 </View>
-                <Pressable style={styles.btnRegister}>
-                    <Text style={styles.btnRegisterLabel}>Зареєструватися</Text>
-                </Pressable>
-                <Pressable
-                    style={styles.btnLogin}
-                    onPress={() => userRegistered(true)}>
-                    <Text style={styles.btnLoginLabel}>Вже є акаунт? Увійти</Text>
-                </Pressable>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Реєстрація</Text>
+                    <TextInput
+                        style={[styles.input, isLoginFocused && styles.inputFocused]}
+                        textContentType='username'
+                        value={login}
+                        onChangeText={setLogin}
+                        onFocus={() => setIsLoginFocused(true)}
+                        onBlur={() => setIsLoginFocused(false)}
+                        placeholder='Логін'
+                    />
+                    <TextInput
+                        style={[styles.input, isEmailFocused && styles.inputFocused]}
+                        textContentType='emailAddress'
+                        keyboardType='email-address'
+                        value={email}
+                        onChangeText={setEmail}
+                        onFocus={() => setIsEmailFocused(true)}
+                        onBlur={() => setIsEmailFocused(false)}
+                        placeholder='Адреса електронної пошти'
+                    />
+                    <View>
+                        <TextInput
+                            style={[styles.input, styles.inputLast, isPasswordFocused && styles.inputFocused]}
+                            ref={passwordInput}
+                            textContentType='password'
+                            secureTextEntry={isPasswordHidden}
+                            value={password}
+                            onChangeText={setPassword}
+                            onFocus={() => setIsPasswordFocused(true)}
+                            onBlur={() => setIsPasswordFocused(false)}
+                            placeholder='Пароль'
+                        />
+                        <Pressable
+                            style={styles.btnPasswordShow}
+                            onPress={showPassword}>
+                            <Text style={styles.btnPasswordShowLabel}>Показати</Text>
+                        </Pressable>
+                    </View>
+                    <Pressable style={styles.btnRegister}>
+                        <Text style={styles.btnRegisterLabel}>Зареєструватися</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.btnLogin}
+                        onPress={() => userRegistered(true)}>
+                        <Text style={styles.btnLoginLabel}>Вже є акаунт? Увійти</Text>
+                    </Pressable>
+                </View>
             </View>
-        </View>
+            {/* // </KeyboardAvoidingView> */}
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
+    // KeyboardAvoidingView: {
+        // flex: 1,
+        // justifyContent: "flex-end"
+    // },
     registrationForm: {
         width: '100%',
         paddingTop: 92,
