@@ -2,31 +2,29 @@ import { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import { RegistrationScreen } from './Screens/RegistrationScreen.jsx';
-import { LoginScreen } from './Screens/LoginScreen.jsx';
+import { RegistrationScreen } from './screens/RegistrationScreen';
+import { LoginScreen } from './screens/LoginScreen';
 
 export default function App() {
   const [isUserRegistered, setIsUserRegistered] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    'Roboto-400': require('./fonts/Roboto-Regular.ttf'),
-    'Roboto-500': require('./fonts/Roboto-Medium.ttf'),
-    'Roboto-700': require('./fonts/Roboto-Bold.ttf'),
+    'Roboto-400': require('./assets/fonts/Roboto-Regular.ttf'),
+    'Roboto-500': require('./assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-700': require('./assets/fonts/Roboto-Bold.ttf'),
   });
   if (!fontsLoaded) { return null; }
 
   return (
-    // <KeyboardAvoidingView>
-      <View style={styles.container}>
-        <Image
-          style={styles.background}
-          source={require('./Images/background-image-min.jpg')}
-        />
-        {!isUserRegistered && <RegistrationScreen userRegistered={setIsUserRegistered} />}
-        {isUserRegistered && <LoginScreen userRegistered={setIsUserRegistered} />}
-        <StatusBar style='auto' />
-      </View>
-    // </KeyboardAvoidingView>
+    <View style={styles.container}>
+      <Image
+        style={styles.background}
+        source={require('./assets/img/background-image-min.jpg')}
+      />
+      {!isUserRegistered && <RegistrationScreen userRegistered={setIsUserRegistered} />}
+      {isUserRegistered && <LoginScreen userRegistered={setIsUserRegistered} />}
+      <StatusBar style='auto' />
+    </View>
   );
 }
 

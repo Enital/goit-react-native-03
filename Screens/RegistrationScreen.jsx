@@ -1,221 +1,235 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 import {
-    View,
-    Text,
-    TextInput,
-    Image,
-    Pressable,
-    StyleSheet,
-    TouchableWithoutFeedback,
-    Keyboard,
-} from 'react-native';
-// import { useHeaderHeight } from '@react-navigation/elements'
+  View,
+  Text,
+  TextInput,
+  Image,
+  Pressable,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from "react-native";
 
 export const RegistrationScreen = ({ userRegistered }) => {
-    const [login, setLogin] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [isLoginFocused, setIsLoginFocused] = useState(false);
-    const [isEmailFocused, setIsEmailFocused] = useState(false);
-    const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isLoginFocused, setIsLoginFocused] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-    const passwordInput = useRef();
-    const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const passwordInput = useRef();
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
-    function showPassword() {
-        passwordInput.current.focus();
-        setIsPasswordHidden(state => !state);
+  function showPassword() {
+    passwordInput.current.focus();
+    setIsPasswordHidden((state) => !state);
+  }
+
+  const onRegister = () => {
+    if (!email || !password) {
+      Alert.alert("All inputs must be filled");
+      return;
     }
 
-    // const height = useHeaderHeight();
-    return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {/* <KeyboardAvoidingView
-            keyboardVerticalOffset={5}
-           behavior="padding"
-             style={styles.KeyboardAvoidingView}
-            enabled
-         > */}
-            <View style={styles.registrationForm}>
-                <View style={styles.userPhoto}>
-                    <Pressable style={styles.btnAddPhoto}>
-                        <Image
-                            style={styles.btnAddPhotoIcon}
-                            source={require('../Images/button-add-photo-min.png')}
-                        />
-                    </Pressable>
-                </View>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Реєстрація</Text>
-                    <TextInput
-                        style={[styles.input, isLoginFocused && styles.inputFocused]}
-                        textContentType='username'
-                        value={login}
-                        onChangeText={setLogin}
-                        onFocus={() => setIsLoginFocused(true)}
-                        onBlur={() => setIsLoginFocused(false)}
-                        placeholder='Логін'
-                    />
-                    <TextInput
-                        style={[styles.input, isEmailFocused && styles.inputFocused]}
-                        textContentType='emailAddress'
-                        keyboardType='email-address'
-                        value={email}
-                        onChangeText={setEmail}
-                        onFocus={() => setIsEmailFocused(true)}
-                        onBlur={() => setIsEmailFocused(false)}
-                        placeholder='Адреса електронної пошти'
-                    />
-                    <View>
-                        <TextInput
-                            style={[styles.input, styles.inputLast, isPasswordFocused && styles.inputFocused]}
-                            ref={passwordInput}
-                            textContentType='password'
-                            secureTextEntry={isPasswordHidden}
-                            value={password}
-                            onChangeText={setPassword}
-                            onFocus={() => setIsPasswordFocused(true)}
-                            onBlur={() => setIsPasswordFocused(false)}
-                            placeholder='Пароль'
-                        />
-                        <Pressable
-                            style={styles.btnPasswordShow}
-                            onPress={showPassword}>
-                            <Text style={styles.btnPasswordShowLabel}>Показати</Text>
-                        </Pressable>
-                    </View>
-                    <Pressable style={styles.btnRegister}>
-                        <Text style={styles.btnRegisterLabel}>Зареєструватися</Text>
-                    </Pressable>
-                    <Pressable
-                        style={styles.btnLogin}
-                        onPress={() => userRegistered(true)}>
-                        <Text style={styles.btnLoginLabel}>Вже є акаунт? Увійти</Text>
-                    </Pressable>
-                </View>
+    const data = {
+      login,
+      email,
+      password,
+    };
+    console.log(data);
+
+    setLogin("");
+    setEmail("");
+    setPassword("");
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.registrationForm}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={-220}
+        >
+          <View style={styles.userPhoto}>
+            <Pressable style={styles.btnAddPhoto}>
+              <Image
+                style={styles.btnAddPhotoIcon}
+                source={require("../assets/img/button-add-photo-min.png")}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.title}>Реєстрація</Text>
+            <TextInput
+              style={[styles.input, isLoginFocused && styles.inputFocused]}
+              textContentType="username"
+              value={login}
+              onChangeText={setLogin}
+              onFocus={() => setIsLoginFocused(true)}
+              onBlur={() => setIsLoginFocused(false)}
+              placeholder="Логін"
+            />
+            <TextInput
+              style={[styles.input, isEmailFocused && styles.inputFocused]}
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+              onFocus={() => setIsEmailFocused(true)}
+              onBlur={() => setIsEmailFocused(false)}
+              placeholder="Адреса електронної пошти"
+            />
+            <View>
+              <TextInput
+                style={[
+                  styles.input,
+                  styles.inputLast,
+                  isPasswordFocused && styles.inputFocused,
+                ]}
+                ref={passwordInput}
+                textContentType="password"
+                secureTextEntry={isPasswordHidden}
+                value={password}
+                onChangeText={setPassword}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
+                placeholder="Пароль"
+              />
+              <Pressable style={styles.btnPasswordShow} onPress={showPassword}>
+                <Text style={styles.btnPasswordShowLabel}>Показати</Text>
+              </Pressable>
             </View>
-            {/* // </KeyboardAvoidingView> */}
-        </TouchableWithoutFeedback>
-    );
+            <Pressable style={styles.btnRegister} onPress={onRegister}>
+              <Text style={styles.btnRegisterLabel}>Зареєструватися</Text>
+            </Pressable>
+            <Pressable
+              style={styles.btnLogin}
+              onPress={() => userRegistered(true)}
+            >
+              <Text style={styles.btnLoginLabel}>Вже є акаунт? Увійти</Text>
+            </Pressable>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </TouchableWithoutFeedback>
+  );
 };
 
 const styles = StyleSheet.create({
-    // KeyboardAvoidingView: {
-        // flex: 1,
-        // justifyContent: "flex-end"
-    // },
-    registrationForm: {
-        width: '100%',
-        paddingTop: 92,
-        paddingBottom: 29,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        backgroundColor: '#FFFFFF',
-    },
+  registrationForm: {
+    width: "100%",
+    paddingTop: 92,
+    paddingBottom: 29,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    backgroundColor: "#FFFFFF",
+  },
 
-    container: {
-        paddingLeft: 16,
-        paddingRight: 16,
-    },
+  container: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
 
-    userPhoto: {
-        position: 'absolute',
-        alignSelf: 'center',
-        top: -60,
-        width: 120,
-        height: 120,
-        backgroundColor: '#F6F6F6',
-        borderRadius: 16,
-    },
+  userPhoto: {
+    position: "absolute",
+    alignSelf: "center",
+    top: -150,
+    width: 120,
+    height: 120,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 16,
+  },
 
-    btnAddPhoto: {
-        position: 'absolute',
-        right: -12,
-        bottom: 14,
-        width: 25,
-        height: 25,
-    },
+  btnAddPhoto: {
+    position: "absolute",
+    right: -12,
+    bottom: 14,
+    width: 25,
+    height: 25,
+  },
 
-    btnAddPhotoIcon: {
-        width: '100%',
-        height: '100%',
-    },
+  btnAddPhotoIcon: {
+    width: "100%",
+    height: "100%",
+  },
 
-    title: {
-        marginBottom: 32,
-        fontFamily: 'Roboto-500',
-        fontSize: 30,
-        lineHeight: 35,
-        textAlign: 'center',
-        color: '#212121',
-    },
+  title: {
+    marginBottom: 32,
+    fontFamily: "Roboto-500",
+    fontSize: 30,
+    lineHeight: 35,
+    textAlign: "center",
+    color: "#212121",
+  },
 
-    input: {
-        marginBottom: 16,
-        padding: 16,
+  input: {
+    marginBottom: 16,
+    padding: 16,
 
-        fontFamily: 'Roboto-400',
-        fontSize: 16,
-        lineHeight: 19,
-        color: '#212121',
+    fontFamily: "Roboto-400",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#212121",
 
-        backgroundColor: '#F6F6F6',
-        borderColor: '#E8E8E8',
-        borderWidth: 1,
-        borderRadius: 8,
-    },
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+    borderWidth: 1,
+    borderRadius: 8,
+  },
 
-    inputLast: {
-        marginBottom: 43,
-    },
+  inputLast: {
+    marginBottom: 43,
+  },
 
-    inputFocused: {
-        borderColor: '#FF6C00',
-    },
+  inputFocused: {
+    borderColor: "#FF6C00",
+  },
 
-    btnPasswordShow: {
-        position: 'absolute',
-        top: 22,
-        right: 16,
-    },
+  btnPasswordShow: {
+    position: "absolute",
+    top: 22,
+    right: 16,
+  },
 
-    btnPasswordShowLabel: {
-        fontFamily: 'Roboto-400',
-        fontSize: 16,
-        lineHeight: 19,
-        color: '#1B4371',
-    },
+  btnPasswordShowLabel: {
+    fontFamily: "Roboto-400",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#1B4371",
+  },
 
-    btnRegister: {
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingLeft: 32,
-        paddingRight: 32,
-        backgroundColor: '#FF6C00',
-        borderRadius: 100,
-    },
+  btnRegister: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 32,
+    paddingRight: 32,
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+  },
 
-    btnRegisterLabel: {
-        fontFamily: 'Roboto-400',
-        fontSize: 16,
-        lineHeight: 19,
-        textAlign: 'center',
-        color: '#FFFFFF',
-    },
+  btnRegisterLabel: {
+    fontFamily: "Roboto-400",
+    fontSize: 16,
+    lineHeight: 19,
+    textAlign: "center",
+    color: "#FFFFFF",
+  },
 
-    btnLogin: {
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingLeft: 32,
-        paddingRight: 32,
-    },
+  btnLogin: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 32,
+    paddingRight: 32,
+  },
 
-    btnLoginLabel: {
-        fontFamily: 'Roboto-400',
-        fontSize: 16,
-        lineHeight: 19,
-        textAlign: 'center',
-        color: '#1B4371',
-    },
+  btnLoginLabel: {
+    fontFamily: "Roboto-400",
+    fontSize: 16,
+    lineHeight: 19,
+    textAlign: "center",
+    color: "#1B4371",
+  },
 });
